@@ -1,6 +1,4 @@
-import sys
-import time
-import pygame
+import sys, time, pygame
 from settings import DynamicSettings, Settings
 from objects import Snake, SnakeHead, Food
 from texts import Scoreboard, Text
@@ -16,8 +14,8 @@ class Snake_game():
         self.snake = []
         self.ds = DynamicSettings(self)
         self.scoreboard = Scoreboard(self) 
-        self.start_msg = Text(self, text='press space to start', y=self.screen_rect.bottom-100, font_size=48 )
-        self.hs_msg = Text(self, text='higscore: '+ str(self.ds.highscore), y=30, font_size=80 )
+        self.msgs = [Text(self, text='press space to start', y=self.screen_rect.bottom-100, font_size=48 ),
+         Text(self, text='higscore: '+ str(self.ds.highscore), y=30, font_size=80)]
         self.food = None
 
     def run_game(self):        
@@ -32,8 +30,9 @@ class Snake_game():
                 time.sleep(0.5 / self.ds.snake_speed)
                 self.increase_speed()
             else:
-                self.start_msg.print_text()
-                self.hs_msg.print_text()
+                for msg in self.msgs:
+                    msg.print_text()
+                
                                   
     def check_events(self):
         for event in pygame.event.get():
@@ -111,7 +110,7 @@ class Snake_game():
     
     def lose_game(self):
         self.settings.game_active = False
-        self.hs_msg = Text(self, text='higscore: '+ str(self.ds.highscore), y=30, font_size=80 )
+        self.msgs[1] = Text(self, text='higscore: '+ str(self.ds.highscore), y=30, font_size=80 )
 
     def _check_keydown_events(self, event):
         if event.key == pygame.K_SPACE and self.settings.game_active ==False:

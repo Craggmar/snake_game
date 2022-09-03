@@ -3,7 +3,6 @@ from random import randint, choice
 
 class Snake():
     def __init__(self, sgame):
-        '''Inicjalizacja i położenie poczatkowe'''
         self.settings = sgame.settings
         self.color = self.settings.snake_color
         self.screen = sgame.screen
@@ -15,7 +14,6 @@ class Snake():
             self.rect.center = prev_part.rect.center
         
     def draw(self):
-        '''Wyświetlenie snake'a'''
         pygame.draw.circle(self.screen, self.color, self.rect.center, self.settings.snake_size/2)
 
 
@@ -33,7 +31,6 @@ class SnakeHead(Snake):
             self.moving_y = choice((-1,1))
 
     def update_head_position(self):
-        '''Akutalizacja pozycji'''
         self.rect.x += self.settings.snake_step * self.moving_x
         self.rect.y += self.settings.snake_step * self.moving_y
 
